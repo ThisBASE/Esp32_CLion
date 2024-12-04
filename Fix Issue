@@ -1,0 +1,66 @@
+CMake Error at C:/Espressif/frameworks/esp-idf-v5.3.1/components/xtensa/project_include.cmake:19 (message):
+  Internal error, toolchain has not been set correctly by project (or an
+  invalid CMakeCache.txt file has been generated somehow)
+Call Stack (most recent call first):
+  C:/Espressif/frameworks/esp-idf-v5.3.1/tools/cmake/build.cmake:400 (include)
+  C:/Espressif/frameworks/esp-idf-v5.3.1/tools/cmake/build.cmake:632 (__build_process_project_includes)
+  C:/Espressif/frameworks/esp-idf-v5.3.1/tools/cmake/project.cmake:710 (idf_build_process)
+  CMakeLists.txt:6 (project)
+-- Configuring incomplete, errors occurred!
+
+Để khắc phục lỗi khi cấu hình ESP-IDF trên CLion, hãy làm theo các bước sau:
+
+Kiểm tra cài đặt môi trường ESP-IDF trong CLion:
+
+Mở CLion
+Vào File > Settings > Build, Execution, Deployment > CMake
+Trong phần Environment, thêm biến môi trường:
+CopyIDF_PATH=C:\Espressif\frameworks\esp-idf-v5.3.1
+
+
+
+Cấu hình CMake Toolchain File:
+
+Trong cùng cửa sổ Settings của CLion
+Thêm vào CMake options:
+Copy-DCMAKE_TOOLCHAIN_FILE=C:\Espressif\frameworks\esp-idf-v5.3.1\tools\cmake\toolchain-esp32.cmake
+
+
+
+Thiết lập PATH trong CLion:
+Thêm các đường dẫn sau vào PATH trong phần Environment:
+CopyC:\Espressif\python_env\idf5.3_py3.11_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.3.1\tools;C:\Espressif\tools\tools\xtensa-esp32-elf\esp-12.2.0_20230208\xtensa-esp32-elf\bin;C:\Espressif\tools\tools\riscv32-esp-elf\esp-12.2.0_20230208\riscv32-esp-elf\bin;C:\Espressif\tools\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\frameworks\esp-idf-v5.3.1\components\esptool_py\esptool;C:\Espressif\tools\tools\openocd-esp32\v0.12.0-esp32-20230921\openocd-esp32\bin;C:\Espressif\tools\tools\ninja\1.10.2;C:\Espressif\tools\tools\idf-exe\1.0.3;C:\Espressif\tools\tools\ccache\4.8\ccache-4.8-windows-x86_64;C:\Espressif\tools\tools\dfu-util\0.11\dfu-util-0.11-win64;C:\Espressif\tools\tools\esp-rom-elfs\20230320
+
+Xóa cache và build files:
+
+Đóng CLion
+Xóa thư mục cmake-build-debug trong project của bạn
+Xóa file CMakeCache.txt nếu có
+
+
+Reload project:
+
+Mở lại CLion
+Chuột phải vào CMakeLists.txt
+Chọn Reload CMake Project
+
+
+Kiểm tra cấu hình target:
+bashCopyidf.py set-target esp32
+
+Nếu vẫn gặp lỗi:
+
+Mở terminal trong CLion
+Chạy lệnh:
+
+bashCopyC:\Espressif\frameworks\esp-idf-v5.3.1\export.bat
+
+Sau đó reload lại CMake project
+
+
+
+Nếu vẫn gặp vấn đề, bạn có thể thử:
+
+Gỡ cài đặt và cài đặt lại ESP-IDF
+Kiểm tra phiên bản CMake trong CLion (nên dùng version 3.16 trở lên)
+Đảm bảo Python 3.8+ đã được cài đặt và được cấu hình đúng trong CLion
